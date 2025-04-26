@@ -2,6 +2,6 @@
 
 import  from "../static/app"
 
-export default function SyntheticV0PageForDeployment() {
+export default function SyntheticagentPageForDeployment() {
   return < />
 }
