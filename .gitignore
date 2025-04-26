@@ -2,10 +2,22 @@
 
 # dependencies
 /node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+.nyc_output
 
 # next.js
 /.next/
 /out/
+.next-cache/
+
+# production
+/build
+/dist
 
 # production
 /build
