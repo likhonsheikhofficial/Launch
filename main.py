@@ -15,12 +15,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-if __name__ == "__main__":
-    # Log configuration
-    logger.info(f"Starting Launch AI Generator with provider: {config.provider}")
-    logger.info(f"Model: {config.model_name}")
-    logger.info(f"LangSmith tracing enabled: {config.tracing_enabled}")
-    logger.info(f"Rate limiting: {config.rate_limit_requests} requests per {config.rate_limit_window} seconds")
-    
-    # Run the Flask application
-    app.run(host=config.host, port=config.port, debug=config.debug)
+# Log configuration immediately (on cold start)
+logger.info(f"Starting Launch AI Generator with provider: {config.provider}")
+logger.info(f"Model: {config.model_name}")
+logger.info(f"LangSmith tracing enabled: {config.tracing_enabled}")
+logger.info(f"Rate limiting: {config.rate_limit_requests} requests per {config.rate_limit_window} seconds")
+
+# --- DO NOT call app.run() ---
+# Simply expose the `app` object
+# Vercel will automatically find and serve it
