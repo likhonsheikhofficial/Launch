@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../dialog'
-import { ScrollArea } from '../scroll-area'
-import { Card } from '../card'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './dialog'
+import { ScrollArea } from './scroll-area'
+import { Card } from './card'
 
 interface ShortcutItem {
   key: string
