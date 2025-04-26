@@ -1,211 +1,231 @@
+/**
+ * @author likhonsheikh
+ * @license AGPL-3.0
+ * @link https://github.com/likhonsheikhofficial
+ */
+
 # Launch AI Generator
-Launch is a powerful system that turns ideas into full, production-ready applications using AI and Python. Through advanced prompt engineering, Launch follows a unique workflow to generate clean, professional Python codebases.Launch is a production-ready system that integrates a LangChain-powered agent within a Flask server environment. The system is designed to be modular, scalable, and secure, with a focus on maintainability and extensibility.
+
+Launch is a powerful system that turns ideas into full, production-ready applications using AI and Python. Through advanced prompt engineering, Launch follows a unique workflow to generate clean, professional Python codebases.
 
 ## Features
 
-- **LangChain Agent**: Interactive AI assistant with specialized tools
-- **Vector Memory**: FAISS-powered semantic memory for conversation tracking
-- **Tool Integration**: Extensible tool registry for agent capabilities
-- **Security**: Input validation, output sanitization, and rate limiting
-- **Monitoring**: LangSmith integration for tracing and debugging
-- **Deployment**: Vercel-ready serverless architecture
+- **AI-Powered Code Generation**: Generate clean, production-ready code from natural language descriptions
+- **Prompt Engineering**: Test and iterate on prompts with LangSmith integration
+- **Evaluation Framework**: Evaluate prompt performance with customizable criteria
+- **Version History**: Track and manage different versions of generated code
+- **Feedback System**: Collect and analyze user feedback for continuous improvement
+- **Security**: Rate limiting, input sanitization, and API key authentication
+- **Streaming Responses**: Real-time code generation with streaming API
 
 ## Architecture
 
-The system is built with a modular architecture:
+Launch AI Generator is built with a modular architecture:
 
-- **Flask Server**: Handles HTTP requests, WebSocket connections, and serves the web interface
-- **Agent Manager**: Orchestrates agent creation, execution, and lifecycle management
-- **LangChain Agent**: Implements the agent using LangChain Expression Language (LCEL)
-- **Memory Manager**: Manages conversation history and vector-based memory using FAISS
-- **Tool Registry**: Manages the tools available to the agent
-- **LLM Provider**: Integrates with Together AI for language model capabilities
+- **Flask Backend**: Handles HTTP requests and serves the web interface
+- **LangChain Integration**: Provides the core AI functionality
+- **LangSmith Observability**: Monitors and evaluates AI performance
+- **Prompt Engineering System**: Manages and optimizes prompts
+- **Security Layer**: Protects against abuse and attacks
+
+## Security Features
+
+- **Rate Limiting**: Prevents abuse through request rate limiting via Flask-Limiter
+- **Input Sanitization**: All user inputs are validated and sanitized
+- **API Key Authentication**: Optional API key authentication for protected endpoints
+- **HTTPS Enforcement**: All traffic goes over TLS/SSL (Vercel endpoints are HTTPS by default)
+- **Secure Headers**: Security headers to prevent common web vulnerabilities
+- **Environment Secret Management**: Credentials stored only in environment variables or Vercel Secrets
+
+## Scalability & Extensibility
+
+- **Stateless Serverless**: Flask functions remain stateless, allowing auto-scaling with demand
+- **Streaming Responses**: Use LangChain's streaming APIs to yield partial results immediately
+- **Caching**: Optional caching for improved performance
+- **Modular Design**: New capabilities can be added without changing the core
 
 ## Prerequisites
 
 - Python 3.9+
-- Together AI API key
-- LangSmith API key (optional, for monitoring)
-- Tavily API key (optional, for search functionality)
+- OpenAI API key or Together AI API key
+- LangSmith API key (for observability and evaluations)
 
 ## Installation
 
 1. Clone the repository:
-   \`\`\`
+   \`\`\`bash
    git clone https://github.com/yourusername/launch-ai-generator.git
    cd launch-ai-generator
    \`\`\`
 
 2. Install dependencies:
-   \`\`\`
+   \`\`\`bash
    pip install -r requirements.txt
    \`\`\`
 
 3. Set up environment variables:
-   \`\`\`
+   \`\`\`bash
+   # LLM configuration
+   export OPENAI_API_KEY=your_openai_api_key
+   # or
    export TOGETHER_API_KEY=your_together_api_key
-   export LANGCHAIN_API_KEY=your_langsmith_api_key  # Optional
-   export TAVILY_API_KEY=your_tavily_api_key  # Optional
+   export MODEL_NAME=gpt-4o  # or another model
+
+   # LangSmith configuration
+   export LANGSMITH_API_KEY=your_langsmith_api_key
+   export LANGSMITH_PROJECT=launch-ai-generator
+   
+   # Security configuration
+   export API_KEYS=key1,key2,key3  # Optional, comma-separated list of valid API keys
+   export RATE_LIMIT_REQUESTS=10  # Optional, default is 10
+   export RATE_LIMIT_WINDOW=60  # Optional, default is 60 seconds
    \`\`\`
 
 4. Run the application:
-   \`\`\`
-   uvicorn api.index:app --reload
+   \`\`\`bash
+   python main.py
    \`\`\`
 
 5. Open your browser and navigate to `http://localhost:8000`
 
-## Deployment to Vercel
+## LangSmith Integration
+
+Launch AI Generator integrates with LangSmith for observability and evaluations:
+
+### Observability
+
+- **Trace Runs**: Every code generation is traced in LangSmith
+- **Monitor Performance**: Track latency, token usage, and other metrics
+- **Debug Issues**: Identify and fix problems in your prompts
+
+### Evaluations
+
+Launch includes a built-in evaluation framework:
+
+1. **Create Datasets**: Build evaluation datasets with example inputs and expected outputs
+2. **Define Criteria**: Evaluate generated code on correctness, code quality, completeness, security, and maintainability
+3. **Run Evaluations**: Test different prompts against your datasets
+4. **Analyze Results**: Compare performance across different prompts and models
+
+## Prompt Engineering
+
+The system includes a prompt engineering module that allows you to:
+
+1. **Create Prompts**: Design specialized prompts for different types of applications
+2. **Test Variations**: Try different prompt formulations
+3. **Collect Feedback**: Gather user feedback on generated code
+4. **Iterate**: Continuously improve prompts based on evaluations and feedback
+
+## Deployment
+
+### Vercel
 
 1. Install Vercel CLI:
-   \`\`\`
+   \`\`\`bash
    npm install -g vercel
    \`\`\`
 
-2. Configure environment variables in Vercel:
-   \`\`\`
+2. Set up environment variables in Vercel:
+   \`\`\`bash
    vercel env add TOGETHER_API_KEY
-   vercel env add LANGCHAIN_API_KEY  # Optional
-   vercel env add TAVILY_API_KEY  # Optional
+   # or
+   vercel env add OPENAI_API_KEY
+   
+   # Optional: Add LangSmith API key
+   vercel env add LANGSMITH_API_KEY
+   
+   # Optional: Add API keys for authentication
+   vercel env add API_KEYS
    \`\`\`
 
 3. Deploy:
-   \`\`\`
+   \`\`\`bash
    vercel --prod
    \`\`\`
 
-## API Endpoints
+### Docker
 
-### HTTP Endpoints
-
-- `GET /`: Main application page
-- `POST /api/generate`: Generate code based on a prompt
-- `POST /api/screenshot`: Generate UI from a screenshot
-- `GET /api/versions`: Get all saved versions
-- `GET /api/version/{timestamp}`: Get a specific version
-- `POST /api/agent/chat`: Chat with the agent
-- `POST /api/agent/clear-memory`: Clear memory for a session
-- `GET /health`: Health check endpoint
-- `GET /debug`: Debug endpoint (not available in production)
-
-### WebSocket Endpoints
-
-- `/api/agent/ws/{client_id}`: WebSocket endpoint for streaming agent responses
-
-## Configuration
-
-The application can be configured using environment variables:
-
-### LLM Configuration
-
-- `TOGETHER_API_KEY`: API key for Together AI
-- `TOGETHER_MODEL`: Model name (default: "togethercomputer/llama-3-70b-instruct")
-- `TOGETHER_TEMPERATURE`: Temperature for generation (default: 0.7)
-- `TOGETHER_MAX_TOKENS`: Maximum tokens to generate (default: 2000)
-
-### Agent Configuration
-
-- `AGENT_PROMPT_PATH`: Path to the agent prompt file (default: "prompts/agent_prompt.txt")
-- `AGENT_PROMPT`: Fallback prompt if file not found
-- `AGENT_MAX_ITERATIONS`: Maximum iterations for the agent (default: 5)
-- `AGENT_VERBOSE`: Enable verbose logging (default: false)
-- `AGENT_MAX_ACTIVE`: Maximum active agents (default: 100)
-- `AGENT_ENABLE_STREAMING`: Enable streaming responses (default: true)
-
-### Memory Configuration
-
-- `MEMORY_USE_VECTOR`: Use vector-based memory (default: true)
-- `MEMORY_DIR`: Directory for storing memory (default: "/tmp/launch/memory")
-- `MEMORY_K`: Number of relevant items to retrieve (default: 5)
-- `EMBEDDINGS_MODEL`: Model for embeddings (default: "sentence-transformers/all-MiniLM-L6-v2")
-- `EMBEDDINGS_CACHE_DIR`: Cache directory for embeddings (default: "/tmp/launch/embeddings")
-
-### Tool Configuration
-
-- `TAVILY_API_KEY`: API key for Tavily search
-- `TOOL_MODULES`: Comma-separated list of modules containing tools
-
-### LangSmith Configuration
-
-- `LANGCHAIN_API_KEY`: API key for LangSmith
-- `LANGCHAIN_PROJECT`: Project name for LangSmith (default: "launch-ai-generator")
-
-### Security Configuration
-
-- `RATE_LIMIT_REQUESTS`: Maximum requests per window (default: 10)
-- `RATE_LIMIT_WINDOW`: Rate limit window in seconds (default: 60)
-- `API_KEYS`: Comma-separated list of valid API keys
-
-## Development
-
-### Adding New Tools
-
-1. Create a new tool function:
-   ```python
-   from langchain.tools import tool
-   from pydantic import BaseModel, Field
-
-   class MyToolInput(BaseModel):
-       param1: str = Field(..., description="Description of param1")
-
-   @tool("my_tool", args_schema=MyToolInput)
-   def my_tool(param1: str) -> str:
-       """
-       Description of my tool.
-       """
-       # Tool implementation
-       return f"Result: {param1}"
+1. Build the Docker image:
+   \`\`\`bash
+   docker build -t launch-ai-generator .
    \`\`\`
 
-2. Register the tool in the tool registry:
-   ```python
-   from .tool_registry import ToolRegistry
-
-   tool_registry = ToolRegistry()
-   tool_registry.register_tool(my_tool)
+2. Run the container:
+   \`\`\`bash
+   docker run -p 8000:8000 -e OPENAI_API_KEY=your_key -e LANGSMITH_API_KEY=your_key launch-ai-generator
    \`\`\`
 
-### Adding Custom Memory
+## API Reference
 
-1. Create a custom memory class:
-   ```python
-   from langchain.memory import BaseMemory
+### Generate Code
 
-   class MyCustomMemory(BaseMemory):
-       # Custom memory implementation
-       pass
-   \`\`\`
+\`\`\`
+POST /api/generate
+\`\`\`
 
-2. Update the memory manager to use your custom memory:
-   ```python
-   from .memory_manager import MemoryManager
+Request body:
+\`\`\`json
+{
+  "prompt": "Create a Flask application with user authentication",
+  "prompt_type": "web_app",
+  "additional_context": "Use SQLAlchemy for the database"
+}
+\`\`\`
 
-   memory_manager = MemoryManager()
-   # Configure to use your custom memory
-   \`\`\`
+### Stream Code Generation
 
-## Security Considerations
+\`\`\`
+POST /api/stream-generate
+\`\`\`
 
-- **Input Validation**: All user inputs are validated and sanitized
-- **Rate Limiting**: Prevents abuse through request rate limiting
-- **Authentication**: Optional API key authentication for protected endpoints
-- **Secure API Key Management**: Environment variables for sensitive credentials
-- **Output Sanitization**: Prevents XSS and injection attacks
+Request body:
+\`\`\`json
+{
+  "prompt": "Create a Flask application with user authentication",
+  "prompt_type": "web_app",
+  "additional_context": "Use SQLAlchemy for the database"
+}
+\`\`\`
 
-## Monitoring and Debugging
+Response: Server-Sent Events (SSE) stream
 
-The system integrates with LangSmith for monitoring and debugging:
+### Evaluate Prompt
 
-1. Set up a LangSmith account at https://smith.langchain.com/
-2. Get your API key
-3. Set the `LANGCHAIN_API_KEY` environment variable
-4. Set the `LANGCHAIN_PROJECT` environment variable (optional)
+\`\`\`
+POST /api/evaluate
+\`\`\`
 
-This enables:
-- Tracing of agent execution
-- Visualization of tool usage
-- Performance monitoring
-- Error tracking
+Request body:
+\`\`\`json
+{
+  "prompt_type": "web_app",
+  "dataset_name": "web_app_examples",
+  "criteria": ["correctness", "code_quality"]
+}
+\`\`\`
+
+### Create Dataset
+
+\`\`\`
+POST /api/dataset
+\`\`\`
+
+Request body:
+\`\`\`json
+{
+  "dataset_name": "web_app_examples",
+  "examples": [
+    {
+      "input": "Create a Flask application with user authentication",
+      "expected_output": "..."
+    }
+  ]
+}
+\`\`\`
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
@@ -214,7 +234,3 @@ This project is licensed under the AGPL-3.0 License - see the LICENSE file for d
 ## Author
 
 [Likhon Sheikh](https://github.com/likhonsheikhofficial)
-\`\`\`
-
-Let's create a critique document to evaluate the system:
-

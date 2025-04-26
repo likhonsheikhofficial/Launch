@@ -1,3 +1,9 @@
+/**
+ * @author likhonsheikh
+ * @license AGPL-3.0
+ * @link https://github.com/likhonsheikhofficial
+ */
+
 # Launch AI Generator - Deployment Guide
 
 This guide provides detailed instructions for deploying the Launch AI Generator on Vercel, including configuration steps and troubleshooting tips.

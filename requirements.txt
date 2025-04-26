@@ -1,0 +1,11 @@
+# @author likhonsheikh
+flask==2.3.3
+flask-cors==4.0.0
+flask-limiter==3.5.0
+langchain==0.0.335
+langchain-groq==0.0.1
+langchain-together==0.0.1
+# Remove explicit langsmith pin to let pip resolve dependencies
+pydantic==2.4.2
+python-dotenv==1.0.0
+werkzeug==2.3.7

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- @author likhonsheikh -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch - AI-Powered App Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/favicon.ico">
+    <meta name="description" content="Launch - Where ideas turn into full, production-ready applications using AI">
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Launch AI Generator</h1>
+            <div class="model-badge" id="model-badge">Powered by AI</div>
+        </header>
+        
+        <main>
+            <section class="input-section">
+                <form id="generate-form" onsubmit="return false;">
+                    <textarea id="prompt" name="prompt" placeholder="Describe the application you want to build..."></textarea>
+                    
+                    <div class="prompt-selector">
+                        <label for="prompt-type">Prompt Type:</label>
+                        <select id="prompt-type" name="prompt-type">
+                            <option value="default">Default</option>
+                            <option value="web_app">Web Application</option>
+                            <option value="api">API</option>
+                            <option value="data_analysis">Data Analysis</option>
+                        </select>
+                    </div>
+                    
+                    <div class="advanced-options">
+                        <details>
+                            <summary>Advanced Options</summary>
+                            <div class="advanced-content">
+                                <div class="form-group">
+                                    <label for="additional-context">Additional Context:</label>
+                                    <textarea id="additional-context" name="additional-context" placeholder="Add any additional context or requirements..."></textarea>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    
+                    <div class="actions">
+                        <button type="button" id="generate-btn" class="primary-btn">Generate Code</button>
+                    </div>
+                </form>
+            </section>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div class="loading-text">Generating your application...</div>
+            </div>
+            
+            <section class="output-section" id="output-section">
+                <div class="output-header">
+                    <h2>Generated Code</h2>
+                    <div class="output-actions">
+                        <button id="copy-btn" class="secondary-btn">Copy</button>
+                        <button id="feedback-btn" class="secondary-btn">Provide Feedback</button>
+                    </div>
+                </div>
+                <pre id="output"></pre>
+                
+                <div class="langsmith-info">
+                    <a href="#" id="langsmith-link" target="_blank">View in LangSmith</a>
+                    <div class="feedback-stars" id="feedback-stars">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="history-section">
+                <h2>Version History</h2>
+                <ul id="version-list">
+                    <li class="empty-history">No versions yet</li>
+                </ul>
+            </section>
+            
+            <div id="feedback-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h2>Provide Feedback</h2>
+                    <div class="feedback-form">
+                        <div class="rating">
+                            <span class="rating-text">How would you rate the generated code?</span>
+                            <div class="stars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-comment">Comments:</label>
+                            <textarea id="feedback-comment" placeholder="What did you like or dislike about the generated code?"></textarea>
+                        </div>
+                        <button id="submit-feedback-btn" class="primary-btn">Submit Feedback</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 Launch | <a href="https://github.com/likhonsheikhofficial" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>

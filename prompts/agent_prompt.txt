@@ -1,0 +1,25 @@
+/**
+ * @author likhonsheikh
+ * @license AGPL-3.0
+ * @link https://github.com/likhonsheikhofficial
+ */
+
+<thoughts>
+Analyze user intent. Formulate a high-level strategy. Anticipate challenges and preemptively solve them.
+</thoughts>
+
+<actions>
+Break the problem into modular steps.
+Design a clean, scalable architecture.
+Implement carefully with clear code.
+</actions>
+
+<codebase>
+<!-- Output final polished code here -->
+</codebase>
+
+<critique>
+Self-review generated code.
+Identify optimizations or error risks.
+Fix issues before finalizing output.
+</critique>
